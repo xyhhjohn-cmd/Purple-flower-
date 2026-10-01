@@ -1,0 +1,498 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #020506;
+  font-family: Arial, sans-serif;
+}
+
+/* Main screen */
+#garden {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 70%,
+      rgba(91, 33, 182, 0.18),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(168, 85, 247, 0.08),
+      transparent 55%
+    ),
+    #020506;
+}
+
+/* Very subtle light in the background */
+#garden::before {
+  content: "";
+  position: absolute;
+  width: 70vw;
+  height: 35vw;
+  max-width: 600px;
+  max-height: 300px;
+
+  left: 50%;
+  bottom: 4%;
+
+  transform: translateX(-50%);
+
+  background: rgba(126, 34, 206, 0.08);
+
+  filter: blur(55px);
+  border-radius: 50%;
+}
+
+/* Plant container */
+#plant {
+  position: absolute;
+
+  left: 50%;
+  bottom: 0;
+
+  width: min(650px, 100vw);
+  height: 78vh;
+
+  transform: translateX(-50%);
+}
+
+/* SVG stems */
+.stems {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: visible;
+}
+
+.stem-path {
+  fill: none;
+
+  stroke: #6ee45b;
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+  filter:
+    drop-shadow(0 0 3px rgba(74, 222, 128, 0.35));
+
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+
+  animation:
+    stemGrow 2.6s cubic-bezier(.25,.75,.25,1) forwards;
+}
+
+.stem-path.soft {
+  stroke: #37a83d;
+  stroke-width: 1.5;
+  opacity: .75;
+}
+
+@keyframes stemGrow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Flowers */
+.flower {
+  position: absolute;
+
+  width: 76px;
+  height: 62px;
+
+  opacity: 0;
+
+  transform:
+    translate(-50%, -50%)
+    scale(.15);
+
+  animation:
+    flowerAppear 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes flowerAppear {
+  0% {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      scale(.15)
+      rotate(-10deg);
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translate(-50%, -50%)
+      scale(1)
+      rotate(0deg);
+  }
+}
+
+/* Individual flower petals */
+.petal {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 31px;
+  height: 20px;
+
+  transform-origin: 50% 100%;
+
+  border-radius:
+    70% 70%
+    45% 45%;
+
+  background:
+    radial-gradient(
+      ellipse at 40% 35%,
+      #f5d0fe 0%,
+      #d8b4fe 20%,
+      #a855f7 55%,
+      #6b21a8 100%
+    );
+
+  box-shadow:
+    0 0 7px rgba(168, 85, 247, .65),
+    inset 0 0 5px rgba(255,255,255,.18);
+
+  opacity: 0;
+
+  animation:
+    petalOpen .75s ease-out forwards;
+}
+
+.petal:nth-child(1) {
+  transform:
+    translate(-50%, -100%)
+    rotate(0deg);
+
+  animation-delay: .05s;
+}
+
+.petal:nth-child(2) {
+  transform:
+    translate(-50%, -100%)
+    rotate(72deg);
+
+  animation-delay: .12s;
+}
+
+.petal:nth-child(3) {
+  transform:
+    translate(-50%, -100%)
+    rotate(144deg);
+
+  animation-delay: .19s;
+}
+
+.petal:nth-child(4) {
+  transform:
+    translate(-50%, -100%)
+    rotate(216deg);
+
+  animation-delay: .26s;
+}
+
+.petal:nth-child(5) {
+  transform:
+    translate(-50%, -100%)
+    rotate(288deg);
+
+  animation-delay: .33s;
+}
+
+@keyframes petalOpen {
+  0% {
+    opacity: 0;
+    scale: .1;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* Flower center */
+.flower-center {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 14px;
+  height: 14px;
+
+  transform:
+    translate(-50%, -50%)
+    scale(0);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #fffbd0,
+      #fde047 45%,
+      #ca8a04 100%
+    );
+
+  box-shadow:
+    0 0 7px #fde047,
+    0 0 14px rgba(250, 204, 21, .45);
+
+  animation:
+    centerPop .65s .55s cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes centerPop {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(0);
+  }
+
+  70% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.25);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+}
+
+/* Leaves */
+.leaf {
+  position: absolute;
+
+  width: 60px;
+  height: 19px;
+
+  border-radius:
+    100% 0
+    100% 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #79d95c,
+      #287c35 70%,
+      #14532d
+    );
+
+  box-shadow:
+    0 0 4px rgba(74, 222, 128, .2);
+
+  opacity: 0;
+
+  transform-origin: 0% 50%;
+
+  animation:
+    leafGrow .9s ease-out forwards;
+}
+
+@keyframes leafGrow {
+  0% {
+    opacity: 0;
+    transform:
+      scale(.05)
+      rotate(-25deg);
+  }
+
+  100% {
+    opacity: .95;
+    transform:
+      scale(1)
+      rotate(0deg);
+  }
+}
+
+/* Small grass */
+.grass {
+  position: absolute;
+
+  width: 2px;
+
+  background:
+    linear-gradient(
+      to top,
+      #155e2b,
+      #4ade80
+    );
+
+  border-radius: 100%;
+
+  transform-origin: bottom;
+
+  opacity: 0;
+
+  animation:
+    grassGrow 1.4s ease-out forwards;
+}
+
+@keyframes grassGrow {
+  from {
+    opacity: 0;
+    transform: scaleY(0) rotate(0deg);
+  }
+
+  to {
+    opacity: .8;
+    transform: scaleY(1) rotate(var(--rotation));
+  }
+}
+
+/* Floating glowing particles */
+#particles {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: #d8b4fe;
+
+  box-shadow:
+    0 0 5px #c084fc,
+    0 0 12px rgba(168, 85, 247, .8);
+
+  opacity: 0;
+
+  animation:
+    particleFloat var(--duration) linear infinite;
+}
+
+@keyframes particleFloat {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate3d(0, 30px, 0)
+      scale(.3);
+  }
+
+  15% {
+    opacity: .8;
+  }
+
+  75% {
+    opacity: .55;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate3d(var(--drift), -180px, 0)
+      scale(1);
+  }
+}
+
+/* Gentle whole garden movement */
+#plant {
+  animation:
+    gardenSway 7s ease-in-out infinite;
+}
+
+@keyframes gardenSway {
+  0%,
+  100% {
+    transform:
+      translateX(-50%)
+      rotate(-.25deg);
+  }
+
+  50% {
+    transform:
+      translateX(-50%)
+      rotate(.25deg);
+  }
+}
+
+/* Transition between scenes */
+#plant.scene-out {
+  animation:
+    sceneOut 1.5s ease-in forwards;
+}
+
+@keyframes sceneOut {
+  to {
+    opacity: 0;
+    transform:
+      translateX(-50%)
+      translateY(18px)
+      scale(.98);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+  #plant {
+    width: 100vw;
+    height: 72vh;
+  }
+
+  .flower {
+    width: 65px;
+    height: 54px;
+  }
+
+  .petal {
+    width: 27px;
+    height: 18px;
+  }
+
+  .flower-center {
+    width: 12px;
+    height: 12px;
+  }
+
+  .leaf {
+    width: 52px;
+    height: 17px;
+  }
+}
